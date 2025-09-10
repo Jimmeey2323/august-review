@@ -3,6 +3,7 @@ import React from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableFooter } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
 import { ChevronUp, ChevronDown } from 'lucide-react';
+import { TableExportControls } from '@/components/ui/TableExportControls';
 
 interface Column {
   key: string;
@@ -27,6 +28,9 @@ interface ModernDataTableProps {
   sortField?: string;
   sortDirection?: 'asc' | 'desc';
   onRowClick?: (row: any) => void;
+  showExportControls?: boolean;
+  exportTitle?: string;
+  exportFilename?: string;
 }
 
 export const ModernDataTable: React.FC<ModernDataTableProps> = ({
@@ -42,7 +46,10 @@ export const ModernDataTable: React.FC<ModernDataTableProps> = ({
   onSort,
   sortField,
   sortDirection,
-  onRowClick
+  onRowClick,
+  showExportControls = true,
+  exportTitle = "Table Data",
+  exportFilename
 }) => {
   if (loading) {
     return (
@@ -69,8 +76,20 @@ export const ModernDataTable: React.FC<ModernDataTableProps> = ({
   };
 
   return (
-    <div className={cn("relative overflow-auto rounded-xl", className)} style={{ maxHeight }}>
-      <Table className="w-full">
+    <div className="space-y-4">
+      {showExportControls && data.length > 0 && (
+        <div className="flex justify-end">
+          <TableExportControls 
+            data={data}
+            title={exportTitle}
+            filename={exportFilename}
+            size="sm"
+            variant="outline"
+          />
+        </div>
+      )}
+      <div className={cn("relative overflow-auto rounded-xl", className)} style={{ maxHeight }}>
+        <Table className="w-full">
         <TableHeader className={cn(
           stickyHeader && "sticky top-0 z-20",
           "bg-gradient-to-r text-primary-foreground border-none shadow-sm",
@@ -157,6 +176,7 @@ export const ModernDataTable: React.FC<ModernDataTableProps> = ({
           </TableFooter>
         )}
       </Table>
+      </div>
     </div>
   );
 };

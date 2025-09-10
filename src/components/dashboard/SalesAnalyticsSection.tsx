@@ -22,6 +22,7 @@ import { formatCurrency, formatNumber, formatPercentage } from '@/utils/formatte
 import { getPreviousMonthDateRange } from '@/utils/dateUtils';
 import { cn } from '@/lib/utils';
 import { AdvancedExportButton } from '@/components/ui/AdvancedExportButton';
+import { TabLevelExportControls } from '@/components/ui/TabLevelExportControls';
 
 interface SalesAnalyticsSectionProps {
   data: SalesData[];
@@ -365,6 +366,31 @@ export const SalesAnalyticsSection: React.FC<SalesAnalyticsSectionProps> = ({ da
     });
   };
 
+  // Generate datasets for tab-level exports
+  const getYearOnYearDatasets = () => [
+    { name: 'Year-on-Year Analysis', data: allHistoricData, enabled: true }
+  ];
+
+  const getMonthOnMonthDatasets = () => [
+    { name: 'Month-on-Month Analysis', data: allHistoricData, enabled: true }
+  ];
+
+  const getProductPerformanceDatasets = () => [
+    { name: 'Product Performance Analysis', data: allHistoricData, enabled: true }
+  ];
+
+  const getCategoryPerformanceDatasets = () => [
+    { name: 'Category Performance Analysis', data: allHistoricData, enabled: true }
+  ];
+
+  const getSoldByAnalysisDatasets = () => [
+    { name: 'Sold By Analysis', data: allHistoricData, enabled: true }
+  ];
+
+  const getPaymentMethodDatasets = () => [
+    { name: 'Payment Method Analysis', data: allHistoricData, enabled: true }
+  ];
+
   return (
     <div className="space-y-8">
       {/* Note Taker Component */}
@@ -433,7 +459,14 @@ export const SalesAnalyticsSection: React.FC<SalesAnalyticsSectionProps> = ({ da
 
                 <TabsContent value="yearOnYear" className="mt-8">
                   <section className="space-y-4">
-                    <h2 className="text-2xl font-bold text-gray-900">Year-on-Year Analysis</h2>
+                    <div className="flex justify-between items-center">
+                      <h2 className="text-2xl font-bold text-gray-900">Year-on-Year Analysis</h2>
+                      <TabLevelExportControls 
+                        datasets={getYearOnYearDatasets()}
+                        tabName="Year-on-Year Analysis"
+                        defaultFileName={`year-on-year-${activeLocation}`}
+                      />
+                    </div>
                     <EnhancedYearOnYearTable 
                       data={allHistoricData} 
                       onRowClick={handleRowClick} 
@@ -444,7 +477,14 @@ export const SalesAnalyticsSection: React.FC<SalesAnalyticsSectionProps> = ({ da
 
                 <TabsContent value="monthOnMonth" className="mt-8">
                   <section className="space-y-4">
-                    <h2 className="text-2xl font-bold text-gray-900">Month-on-Month Analysis</h2>
+                    <div className="flex justify-between items-center">
+                      <h2 className="text-2xl font-bold text-gray-900">Month-on-Month Analysis</h2>
+                      <TabLevelExportControls 
+                        datasets={getMonthOnMonthDatasets()}
+                        tabName="Month-on-Month Analysis"
+                        defaultFileName={`month-on-month-${activeLocation}`}
+                      />
+                    </div>
                     <MonthOnMonthTable 
                       data={allHistoricData} 
                       onRowClick={handleRowClick} 
@@ -457,7 +497,14 @@ export const SalesAnalyticsSection: React.FC<SalesAnalyticsSectionProps> = ({ da
 
                 <TabsContent value="productPerformance" className="mt-8">
                   <section className="space-y-4">
-                    <h2 className="text-2xl font-bold text-gray-900">Product Performance Analysis</h2>
+                    <div className="flex justify-between items-center">
+                      <h2 className="text-2xl font-bold text-gray-900">Product Performance Analysis</h2>
+                      <TabLevelExportControls 
+                        datasets={getProductPerformanceDatasets()}
+                        tabName="Product Performance"
+                        defaultFileName={`product-performance-${activeLocation}`}
+                      />
+                    </div>
                     <ProductPerformanceTable 
                       data={allHistoricData} 
                       onRowClick={handleRowClick} 
@@ -468,7 +515,14 @@ export const SalesAnalyticsSection: React.FC<SalesAnalyticsSectionProps> = ({ da
 
                 <TabsContent value="categoryPerformance" className="mt-8">
                   <section className="space-y-4">
-                    <h2 className="text-2xl font-bold text-gray-900">Category Performance Analysis</h2>
+                    <div className="flex justify-between items-center">
+                      <h2 className="text-2xl font-bold text-gray-900">Category Performance Analysis</h2>
+                      <TabLevelExportControls 
+                        datasets={getCategoryPerformanceDatasets()}
+                        tabName="Category Performance"
+                        defaultFileName={`category-performance-${activeLocation}`}
+                      />
+                    </div>
                     <CategoryPerformanceTable 
                       data={allHistoricData} 
                       onRowClick={handleRowClick} 
@@ -479,7 +533,14 @@ export const SalesAnalyticsSection: React.FC<SalesAnalyticsSectionProps> = ({ da
 
                 <TabsContent value="soldByAnalysis" className="mt-8">
                   <section className="space-y-4">
-                    <h2 className="text-2xl font-bold text-gray-900">Sold By Analysis</h2>
+                    <div className="flex justify-between items-center">
+                      <h2 className="text-2xl font-bold text-gray-900">Sold By Analysis</h2>
+                      <TabLevelExportControls 
+                        datasets={getSoldByAnalysisDatasets()}
+                        tabName="Sold By Analysis"
+                        defaultFileName={`sold-by-analysis-${activeLocation}`}
+                      />
+                    </div>
                     <SoldByMonthOnMonthTable 
                       data={allHistoricData} 
                       onRowClick={handleRowClick} 
@@ -490,7 +551,14 @@ export const SalesAnalyticsSection: React.FC<SalesAnalyticsSectionProps> = ({ da
 
                 <TabsContent value="paymentMethodAnalysis" className="mt-8">
                   <section className="space-y-4">
-                    <h2 className="text-2xl font-bold text-gray-900">Payment Method Analysis</h2>
+                    <div className="flex justify-between items-center">
+                      <h2 className="text-2xl font-bold text-gray-900">Payment Method Analysis</h2>
+                      <TabLevelExportControls 
+                        datasets={getPaymentMethodDatasets()}
+                        tabName="Payment Method Analysis"
+                        defaultFileName={`payment-method-analysis-${activeLocation}`}
+                      />
+                    </div>
                     <PaymentMethodMonthOnMonthTable 
                       data={allHistoricData} 
                       onRowClick={handleRowClick} 
